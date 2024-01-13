@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>DC.js + Leaflet</title>
+
+	<meta itemprop="name" content="DC.js + Leaflet"/>
+	<meta itemprop="description" content="DC.js + Leaflet chart"/>
+
+	<meta charset="UTF-8">
+
+	<link type="text/css" href="lib/leaflet.css" rel="stylesheet"/>
+	<link type="text/css" href="lib/leaflet.markercluster.css" rel="stylesheet"/>
+	<link type="text/css" href="lib/dc.css" rel="stylesheet"/>
+
+  <style>
+    #holder {
+      width:850px;
+      margin:20px auto;
+    }
+    #holder>div {
+      padding:30px 0;
+      clear:both;
+    }
+    .map {
+      width:600px;
+      height:400px;
+    }
+    .pie {
+      margin-left:30px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="holder">
+ 
+
+  <div id="demo2">
+    <h2>Markers with no clustering and selection by area</h2>
+    <i>Renewable energy plants in Bulgaria in 2012</i>
+    <div class="map"></div>
+    <div class="pie"></div>
+  </div>
+
+  <div class="col-md-4">
+    <h3> Row Chart</h3>
+    <div id="row-chart"> </div>
+  </div>
+
+ 
+</div>
+
+<script type="text/javascript" src="lib/d3.js"></script>
+<script type="text/javascript" src="lib/crossfilter.js"></script>
+<script type="text/javascript" src="lib/dc.js"></script>
+<script type="text/javascript" src="lib/leaflet.js"></script>
+
+<!--Optional-->
+<script type="text/javascript" src="lib/leaflet.markercluster.js"></script>
+
+<script type="text/javascript" src="dc.leaflet.js"></script>
+<script type="text/javascript">
+
+/*     Markers      */
+
+d3.csv("cleaned_file.csv", function(data) {
+   //drawMarkerSelect(data);
+
+   console.log(data)
+
+  drawMarkerArea(data);
+
+  
+});
+
+
+
+function drawMarkerArea(data) {
+  var xf = crossfilter(data);
+  var groupname = "marker-area";
+	var facilities = xf.dimension(function(d) { return d.Latitude+','+d.Longitude; });
+	var facilitiesGroup = facilities.group().reduceCount();
+
+  dc.leafletMarkerChart("#demo2 .map",groupname)
+      .dimension(facilities)
+      .group(facilitiesGroup)
+      .width(600)
+	    .height(400)
+      .center([40.63791, -73.97864])
+      .zoom(7)
+      .renderPopup("true")
+      .filterByArea(true); 
+
+  /*  var typeDimention = xf.dimension(function(d){   return d.Borough })
+   var typeGroup = typeDimention.group();
+
+      var rowChart = dc.rowChart("#row-chart")
+                  .height(300)
+                   .width(800)
+                  .dimension(typeDimention)
+                  .group(typeGroup) ;  
+
+	var types = xf.dimension(function(d) { return console.log(d.Borough); d.Borough; });
+	var typesGroup = types.group();
+
+
+  dc.pieChart("#demo2 .pie",groupname)
+      .dimension(types)
+      .group(typesGroup)
+      .width(200)
+	    .height(200)
+	    .renderLabel(true)
+	    .renderTitle(true)
+      .ordering(function (p) {
+        return -p.value;
+      });
+*/
+	dc.renderAll(groupname);
+}
+
+ 
+
+ 
+   
+ 
+
+</script>
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2905006-14']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+
+	</script>
+</body>
+</html>
