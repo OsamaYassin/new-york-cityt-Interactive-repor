@@ -1,0 +1,58 @@
+
+
+
+.map {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    width: 500px;
+    height: 360px;
+}
+
+.pie {
+    margin-left: 30px;
+}
+
+#octocat {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.up-bar{
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin-bottom: 30px;
+    font-family: monospace;
+    background: #383838;
+    color: #FFF;
+    padding: 10px;
+}
+
+.up-bar h2{
+    font-size: 25px;
+}
+
+
+.map-view p{
+    font-size: 25px;
+    font-weight: bolder;
+    font-family: monospace;
+}
+
+.map-view .text-center{
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin-bottom: 20px;
+}
+
+.map-view h3{
+    box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+    padding: 18px;
+    background: #6baed6;
+    color: #fff;
+    font-family: fantasy;
+}
+
+/*.dc-legend {
+    font-size: 11px;
+    display: contents;
+}*/
+
+ 

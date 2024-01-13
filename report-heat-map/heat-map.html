@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<head>
+
+    <meta itemprop="name" content="DC.js + Leaflet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta itemprop="description" content="DC.js + Leaflet chart" />
+
+    <meta charset="UTF-8">
+  <title> Reports  </title>
+
+ 
+    <link rel="stylesheet" href="static/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/lib/css/keen-dashboards.css">
+  <link rel="stylesheet" href="static/lib/css/dc.min.css">
+ 
+    <link rel="stylesheet" href="static/lib/css/leaflet.css">
+   
+
+
+</head>
+<body >
+ 
+ 
+
+
+
+
+
+  
+  <style>
+  
+    .map {
+      width:650px;
+      height:400px;
+    }
+
+    .card {
+    background: #ffffff;
+    box-shadow: 10px 10px 13px 5px rgb(187 162 162 / 11%);
+    padding: 13px;
+    color: #000d;
+    text-align: center;
+    font-size: 30px;
+     
+    margin-left: 14px;
+    height: 122px;
+    width: -webkit-fill-available;
+}
+    .dc-chart g.row text {
+    fill: black;
+}
+
+.d-design{
+   
+    padding: 0px;
+    margin: 0px;
+}
+
+.title{
+  text-align: center;
+    font-size: 17px;
+    background: #48dfd9;
+    padding: 20px;
+    border-radius: 0px 120px 20px;
+}
+
+.dc-chart .axis text {
+    font: 12px sans-serif;
+}
+
+.dc-chart g.axis text {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    text-anchor: middle !important;
+}
+    
+  </style>
+</head>
+<body>
+
+
+  <section class="title">
+
+    <h3>Interactive Data Report: Traffic Accidents in New York City</h3>
+    <p style="font-size: 23px;  font-weight: bold;">Accident Location on Map:</p>
+    <ul style="text-align: left;">
+      <li>  Visualize accidents on a map using Leaflet, Total Traffic Accidents in New York City:
+        <li> There were a total of 216,098 traffic accidents in New York City.</li>
+        <li>- The city that witnessed the largest number of accidents: The breakdown of accidents by region is as follows:</li>
+        <li>- Bronx: 17% - Brooklyn: 34% - Manhattan: 17% - Queens: 27% - Staten Island: 5%</li>
+        <li> - The year that witnessed the largest number of accidents     Accidents Accidents: - 2021: 47% - 2022: 43% - 2023: 10% </li>
+          <li> - Type of passenger vehicle that causes the most accidents: - Passenger vehicle: 85%</li>
+      </li>
+    </ul>
+ 
+  </section>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class='dc-data-count card'>
+          <p style="font-size: 22px;">Total NYC Traffic Accidents</p>
+          <div class=" shadow p-3 mb-5 bg-white rounded"> <span class='filter-count'> </span> </div> 
+         </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class='dc-data-count card'>
+          <p style="font-size: 22px;">   Type Of Map </p>
+          <p style="font-size: 20px;font-weight: bolder;"> <a href="#"> <img src="lib/images/marker-icon-2x.png" style="height: 45px;" alt="" srcset="">  Map Markers with clustering</a>  </p>
+            
+         </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class='dc-data-count card'>
+          <p style="font-size: 22px;">   Type Of Map </p>
+           <p style=" font-size: 20px; font-weight: bolder;"><a href="#">  <img src="lib/images/map.png" style="height: 45px;" alt="" srcset=""> Heat map </a>   </p>
+            
+         </div>
+      </div>
+
+
+      
+
+
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-7" style="    margin-top: 16px;">
+      <p style="text-align: center;  font-size: 17px;   ;">  Show accident location on map </p>
+      <div class="map" id="map"></div>
+    </div>
+  
+    <div class="col-md-5 d-design" style="    margin-top: 21px;">
+      
+     <div class="cardd">
+        <p style="text-align: center;  font-size: 17px;  margin-bottom: -6px;">City with the Most Accidents</p>
+       <div class="pie" style="margin-left: -22px;"></div>
+    </div>
+    </div>
+
+    <div class="col-md-6">
+      <p style="    text-align: center;   margin-top: 26px;  font-size: 17px;">    Year with the Largest Number of Accidents</p>
+
+      <div   id="pie-chart"></div>
+    </div>
+  
+    <div class="col-md-6">
+      <p style="    text-align: center;   margin-top: 26px;  font-size: 17px;">Type of Passenger Car Causing the Most Accidents</p>
+      <div   id="row-chart-vehicle"></div>
+    </div>
+
+    <div class="col-md-11" style="    margin-top: 35px;">
+      <div class="d" id="line-chart"></div>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+<!-- Remove the container if you want to extend the Footer to full width. -->
+<div class="contair my-5">
+
+  <footer class="text-center text-white" style="background-color: #f1f1f1;">
+  <!-- Grid container -->
+  <div class="container pt-4">
+    <!-- Section: Social media -->
+    <section class="mb-4"> 
+      <a
+        class="btn btn-link btn-floating btn-lg text-dark m-1"
+        href="https://www.linkedin.com/in/osama-yassin-521b53157/"
+        role="button"
+        data-mdb-ripple-color="dark"
+        ><i class="fab fa-facebook-f"></i
+      >  <img src="lib/images/linkedin.png" style="    height: 29px;" alt="" srcset=""> </a>
+      <!-- Github -->
+      
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2024 Copyright:
+    <a class="text-dark" href="https://osamadevelop.com.com/">osamadevelop.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+  
+</div>
+<!-- End of .container -->
+
+
+
+
+
+
+ 
+  
+  <script src="static/lib/js/underscore-min.js"></script>
+  
+  <script src="static/lib/js/d3.js"></script>
+  <script src="static/lib/js/crossfilter.js"></script>
+  <script src="static/lib/js/dc.min.js"></script>
+  <script src="static/lib/js/queue.js"></script>
+ 
+
+  <script src="static/lib/js/leaflet.js"></script>
+  <script src="static/lib/js/leaflet-heat.js"></script>
+  <script src="static/lib/js/keen.min.js"></script>
+   <script src="static/lib/js/dc.min.js"></script>
+ 
+
+</body>
+</html>
+
+
+<script>
+
+
+
+
+
+d3.csv("NYC_Collisions.csv", function(data) {
+   //drawMarkerSelect(data);
+//   console.log(data)
+  drawMarkerArea(data);
+
+});
+
+
+function drawMarkerArea(data) {
+
+    
+function print_filter(filter) {
+		var f = eval(filter);
+		if (typeof (f.length) != "undefined") { } else { }
+		if (typeof (f.top) != "undefined") { f = f.top(Infinity); } else { }
+		if (typeof (f.dimension) != "undefined") { f = f.dimension(function (d) { return ""; }).top(Infinity); } else { }
+		console.log(filter + "(" + f.length + ") = " + JSON.stringify(f).replace("[", "[\n\t").replace(/}\,/g, "},\n\t").replace("]", "\n]"));
+	}
+
+ 
+ 
+
+	//Create a Crossfilter instance
+	var ndx = crossfilter(data);
+
+  var xf = crossfilter(data);
+  const all = xf.groupAll();
+  var sumTotal = all.value();
+
+
+
+  var TimeDimenstion = xf.dimension(function(d){ return d.Persons_Injured ;});
+  var timeGroup = TimeDimenstion.group();
+
+
+  var dateDimenstion = xf.dimension(function(d){ return new Date( d.Date).getFullYear() ;});
+  var dateGroup = dateDimenstion.group();
+
+  // Create a group to sum the values for each date
+  var TestingDimenstion = xf.dimension(function(d){ return  new Date(d.Date).getMonth() + 1 ;});
+  const valueGroup = TestingDimenstion.group().reduceSum(d => d.Persons_Injured);
+
+   
+  var types = xf.dimension(function(d) { return d.Borough; });
+	var typesGroup = types.group();
+
+  
+
+   var BoroughrowChart = dc.rowChart(".pie" )
+      .dimension(types)
+      .group(typesGroup)
+      .colors(d3.scale.category10())
+      .width(550)
+	    .height(400)
+      .label(function(d){return d.key+":"+  Math.round((d.value/sumTotal) * 100,0)+'%' ;})
+
+
+   var dataCount =  dc.dataCount('.dc-data-count' )
+        .dimension(xf)
+        .group(all) 
+     
+
+    var daterowChart = dc.rowChart("#pie-chart" )
+      .height(300)
+      .width(500)
+      .dimension(dateDimenstion)
+      .group(dateGroup) 
+      .label(function(d){return d.key+":"+  Math.round((d.value/sumTotal) * 100,0)+'%' ;})
+                 // .renderArea(true)
+                  //.x(d3.linear.scale().domain([   2021 ,  2023  ]));
+ 
+  var Vehicle_TypeDimenstion = xf.dimension(function(d){ return  d.Vehicle_Type});
+  var Vehicle_TypeGroup = Vehicle_TypeDimenstion.group();
+
+
+  
+ var vehiclePieChart =  dc.pieChart("#row-chart-vehicle" )
+      .dimension(Vehicle_TypeDimenstion)
+      .group(Vehicle_TypeGroup)
+      .colors(d3.scale.category10())
+    
+      .width(550)
+	    .height(300)
+      .legend(dc.legend().x(500).y(1).itemHeight(15).gap(5))
+      .title(function(d){return d.data.key+":"+  Math.round((d.value/sumTotal) * 100,0)+'%' ;})
+      .label(function(d){return d.data.key+":"+  Math.round((d.value/sumTotal) * 100,0)+'%' ;})
+      .legend(dc.legend().x(200).y(10).itemHeight(15).gap(5))
+     
+      //.xUnits(dc.units.ordinal);
+ 
+                  
+      
+ // Array to map numeric months to text representations
+ const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+ // Create the line chart
+ var barChartTestingDimenstion = dc.barChart('#line-chart' )
+    .width(1200)
+    .height(500)
+    .dimension(TestingDimenstion)
+   // .group(valueGroup)  Pedestrians_Injured Pedestrians_Killed Persons_Injured
+
+    .group(TestingDimenstion.group().reduceSum(d => d.Persons_Injured) , "Persons Injured")
+    .stack( TestingDimenstion.group().reduceSum(d => d.Persons_Killed) , "Persons Killed ")
+    .stack( TestingDimenstion.group().reduceSum(d => d.Pedestrians_Injured) , "Pedestrians Injured ")
+    .stack( TestingDimenstion.group().reduceSum(d => d.Pedestrians_Killed) , "Pedestrians Killed")
+
+    .gap(20)
+    .centerBar(true)
+    .brushOn(false)
+    .legend(dc.legend().x(500).y(1).itemHeight(15).gap(5))
+    //.title(function(d){return d.data.key+":"+ Math.round((d.data.value/sumTotal) * 100,0)+'%' ;})
+    .x(d3.scale.linear().domain([1,12]))
+    .xAxisLabel('Month')
+    .xAxis().tickFormat(d => monthNames[d - 1])
+
+
+      
+	 
+
+     dc.renderAll();
+	 
+	/**************start Heat Map*******************/
+	var allDim = xf.dimension(function(d) {return d;});
+	 
+  var map = L.map('map');
+
+	var drawMap = function(){
+
+	    map.setView([40.7127753,-74.0059728] , 9);
+		mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+		L.tileLayer(
+			'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+				attribution: '&copy; ' + mapLink + ' Contributors',
+				maxZoom: 15,
+			}).addTo(map);
+
+		//HeatMap
+		var geoData = [];
+		_.each(allDim.top(Infinity), function (d) {
+			geoData.push([d.Latitude ,d.Longitude , 1]);
+	      });
+		var heat = L.heatLayer(geoData,{
+			radius: 10,
+			blur: 20,
+			maxZoom: 1,
+		}).addTo(map);
+
+	};
+
+	//Draw Map
+	drawMap();
+
+	//Update the heatmap if any dc chart get filtered
+	dcCharts = [ BoroughrowChart , dataCount , daterowChart , vehiclePieChart ,barChartTestingDimenstion];
+
+	_.each(dcCharts, function (dcChart) {
+		dcChart.on("filtered", function (chart, filter) {
+			map.eachLayer(function (layer) {
+				map.removeLayer(layer)
+			});
+			drawMap();
+		});
+	});
+
+
+  	/**************End  Heat Map*******************/
+	dc.renderAll();
+
+
+}
+
+
+</script>
